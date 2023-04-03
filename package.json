@@ -1,0 +1,84 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "miniflux",
+  "title": "Miniflux",
+  "description": "",
+  "icon": "command-icon.png",
+  "author": "sevichee",
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "add-subscribe",
+      "title": "Add subscribe",
+      "description": "",
+      "mode": "view"
+    },
+    {
+      "name": "search",
+      "title": "Search",
+      "description": "",
+      "mode": "view"
+    },
+    {
+      "name": "open-in-miniflux",
+      "title": "Open in Miniflux",
+      "description": "",
+      "mode": "view"
+    },
+    {
+      "name": "get-latest-feed",
+      "title": "Get latest feed",
+      "description": "",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "baseUrl",
+      "type": "textfield",
+      "required": true,
+      "title": "Miniflux's URL",
+      "description": "Your Miniflux server's URL",
+      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
+      "placeholder": "such as: https://hosting.miniflux.app/"
+    },
+    {
+      "name": "apiKey",
+      "type": "password",
+      "required": true,
+      "title": "API Key",
+      "description": "Your Miniflux API Key taken from 'Settings > API Keys > Create a new API key' in Miniflux",
+      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
+      "placeholder": "Enter your Miniflux API Key."
+    },
+    {
+      "name": "searchLimit",
+      "type": "textfield",
+      "required": false,
+      "title": "Max search results",
+      "description": "high numbers could lead to worse performance",
+      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
+      "placeholder": "10",
+      "default": "10"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.49.1",
+    "node-fetch": "^3.3.1"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "1.0.5",
+    "@types/node": "18.8.3",
+    "@types/react": "18.0.9",
+    "eslint": "^7.32.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
