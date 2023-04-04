@@ -2,9 +2,9 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "miniflux",
   "title": "Miniflux",
-  "description": "",
+  "description": "A raycast extension for Miniflux",
   "icon": "command-icon.png",
-  "author": "sevichee",
+  "author": "SevicheCC",
   "license": "MIT",
   "commands": [
     {
@@ -20,8 +20,8 @@
       "mode": "view"
     },
     {
-      "name": "get-latest-feed",
-      "title": "Get latest feed",
+      "name": "read-latest-feed",
+      "title": "Read latest feeds",
       "description": "",
       "mode": "view"
     }
@@ -53,11 +53,21 @@
       "description": "high numbers could lead to worse performance",
       "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
       "placeholder": "10"
+    },
+    {
+      "name": "feedLimit",
+      "type": "textfield",
+      "required": false,
+      "title": "The latest feed show on first page",
+      "description": "high numbers could lead to worse performance",
+      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
+      "placeholder": "30"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.49.1",
-    "node-fetch": "^3.3.1"
+    "node-fetch": "^3.3.1",
+    "node-html-markdown": "^1.3.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "1.0.5",

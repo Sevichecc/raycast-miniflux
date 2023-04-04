@@ -6,6 +6,13 @@ export interface Preferences {
   entryStarred?: boolean;
 }
 
+export interface State {
+  isLoading: boolean;
+  error?: MinifluxApiError;
+  origin?: originArticle;
+  entries?: MinifluxEntry[];
+}
+
 export interface MinifluxApiError {
   code: string;
   error_message: string;
@@ -86,4 +93,7 @@ export interface IconData {
   id: number;
   mime_type: string;
   data: string;
+}
+export interface originArticle {
+  content: string
 }
