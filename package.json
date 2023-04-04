@@ -20,12 +20,6 @@
       "mode": "view"
     },
     {
-      "name": "open-in-miniflux",
-      "title": "Open in Miniflux",
-      "description": "",
-      "mode": "view"
-    },
-    {
       "name": "get-latest-feed",
       "title": "Get latest feed",
       "description": "",
@@ -58,8 +52,7 @@
       "title": "Max search results",
       "description": "high numbers could lead to worse performance",
       "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
-      "placeholder": "10",
-      "default": "10"
+      "placeholder": "10"
     }
   ],
   "dependencies": {

@@ -3,7 +3,6 @@ export interface Preferences {
   apiKey: string;
   searchLimit?: number;
   feedLimit?: number;
-  entryStatus?: "read" | "unread" | "removed";
   entryStarred?: boolean;
 }
 
@@ -16,11 +15,13 @@ export interface MinifluxEntries {
   entries: MinifluxEntry[]
 }
 
+export type EntryStatus = "read" | "unread" | "removed"
+
 export interface MinifluxEntry {
   id: number;
   user_id: number;
   feed_id: number;
-  status: string;
+  status: EntryStatus;
   hash: string;
   title: string;
   url: string;
@@ -81,3 +82,8 @@ export interface Icon {
   icon_id: number;
 }
 
+export interface IconData {
+  id: number;
+  mime_type: string;
+  data: string;
+}
