@@ -1,7 +1,7 @@
 import { Image } from "@raycast/api";
 import { MinifluxEntry, IconData } from "./types";
 import { useEffect, useState } from "react";
-import { fetchIconForFeed } from "./api";
+import { getIconForFeed } from "./api";
 
 export const useEntryIcon = (entry: MinifluxEntry): Image.ImageLike => {
   const [icon, setIcon] = useState<Image.ImageLike>({ source: "" });
@@ -11,7 +11,7 @@ export const useEntryIcon = (entry: MinifluxEntry): Image.ImageLike => {
 
     const fetchIcon = async () => {
       try {
-        const { data }: IconData = await fetchIconForFeed(entry);
+        const { data }: IconData = await getIconForFeed(entry);
         if (isMounted) {
           setIcon({
             source: "data:" + data,
