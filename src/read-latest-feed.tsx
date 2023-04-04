@@ -1,4 +1,4 @@
-import { List } from "@raycast/api";
+import { List,showToast,Toast } from "@raycast/api";
 import { getRecentEntries } from "./utils/api";
 import { useEffect, useState } from "react";
 import { MinifluxEntries, MinifluxApiError, State } from "./utils/types";
@@ -14,8 +14,10 @@ export default function getLatestFeed() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        showToast(Toast.Style.Animated,"Fetching latest articles")
         const entries: MinifluxEntries = await getRecentEntries();
         setState({ ...entries, isLoading: false });
+        showToast(Toast.Style.Success, "Latest articles has been loaded");
       } catch (error) {
         handleError(error as MinifluxApiError);
         setState((oldState) => ({ ...oldState, isLoading: false }));

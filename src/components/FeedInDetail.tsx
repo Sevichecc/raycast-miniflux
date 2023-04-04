@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Detail } from "@raycast/api";
+import { Detail,showToast, Toast } from "@raycast/api";
 import { NodeHtmlMarkdown } from "node-html-markdown";
 import { MinifluxEntry, MinifluxApiError,State } from "../utils/types";
 import { fetchOriginArticle } from "../utils/api";
@@ -14,8 +14,10 @@ const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        showToast(Toast.Style.Animated, "Fetching origial article")
         const origin = await fetchOriginArticle(entry);
         setState({ origin, isLoading: false });
+        showToast(Toast.Style.Animated, "Original article has been loaded");
       } catch (error) {
         handleError(error as MinifluxApiError);
         setState((oldState) => ({ ...oldState, isLoading: false }));

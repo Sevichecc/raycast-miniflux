@@ -13,9 +13,9 @@ type FilterDropdownProps = {
 
 const FilterDropdown = ({ handleFilter }: FilterDropdownProps) => {
   return (
-    <List.Dropdown storeValue={false} tooltip="Filter by entry status" defaultValue="all" onChange={handleFilter}>
-      {FILTER_OPTIONS.map((option) => (
-        <List.Dropdown.Item key={option.value} title={option.title} value={option.value} />
+    <List.Dropdown storeValue={false} tooltip="Filter by article status" defaultValue="all" onChange={handleFilter}>
+      {FILTER_OPTIONS.map(({ value, title }) => (
+        <List.Dropdown.Item key={value} title={title} value={value} />
       ))}
     </List.Dropdown>
   );
