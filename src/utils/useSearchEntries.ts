@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { MinifluxApiError, MinifluxEntries, State } from "./types";
 import { search, getRecentEntries } from "./api";
 import { useErrorHandler } from "../utils/useErrorHandler";
-import { showToast, Toast } from "@raycast/api";
 
 export const useSearchEntries = (searchText: string) => {
   const [state, setState] = useState<State>({ isLoading: false });
@@ -12,7 +11,6 @@ export const useSearchEntries = (searchText: string) => {
     setState((oldState) => ({ ...oldState, isLoading: true }));
 
     try {
-      showToast(Toast.Style.Animated, "Searching ……")
       const entries: MinifluxEntries = searchText ? await search(searchText) : await getRecentEntries();
       setState({ ...entries, isLoading: false });
     } catch (error) {

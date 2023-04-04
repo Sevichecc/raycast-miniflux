@@ -1,4 +1,4 @@
-import { List,showToast,Toast } from "@raycast/api";
+import { List, showToast, Toast } from "@raycast/api";
 import { getRecentEntries } from "./utils/api";
 import { useEffect, useState } from "react";
 import { MinifluxEntries, MinifluxApiError, State } from "./utils/types";
@@ -14,7 +14,7 @@ export default function getLatestFeed() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        showToast(Toast.Style.Animated,"Fetching latest articles")
+        showToast(Toast.Style.Animated, "Fetching latest articles");
         const entries: MinifluxEntries = await getRecentEntries();
         setState({ ...entries, isLoading: false });
         showToast(Toast.Style.Success, "Latest articles has been loaded");
@@ -28,24 +28,26 @@ export default function getLatestFeed() {
   }, []);
 
   return (
-    <>
-      <List
-        isShowingDetail
-        isLoading={state.isLoading}
-        throttle={true}
-        navigationTitle="Search entries"
-        searchBarPlaceholder="Search from your miniflux feeds"
-      >
-        {state.entries?.map((entry) => (
-          <List.Item
-            key={entry.id}
-            title={entry.title}
-            keywords={[...entry.title]}
-            detail={<List.Item.Detail markdown={nhm.translate(entry.content)} />}
-            actions={<ControlActions entry={entry} />}
-          />
-        ))}
-      </List>
-    </>
+    <List
+      isShowingDetail
+      isLoading={state.isLoading}
+      throttle={true}
+      navigationTitle="Search entries"
+      searchBarPlaceholder="Search from your miniflux feeds"
+    >
+      {state.entries?.map((entry) => (
+        <List.Item
+          key={entry.id}
+          title={entry.title}
+          keywords={[...entry.title]}
+          detail={
+            <List.Item.Detail
+              markdown={nhm.translate(`<h2>${entry.title}</h2>${entry.content}`)}
+            />
+          }
+          actions={<ControlActions entry={entry} />}
+        />
+      ))}
+    </List>
   );
 }

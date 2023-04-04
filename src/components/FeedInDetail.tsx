@@ -9,7 +9,7 @@ const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
   const [state, setState] = useState<State>({ isLoading: true });
   const handleError = useErrorHandler();
   const nhm = new NodeHtmlMarkdown();
-  const contentToRender = state.origin?.content || entry.content;
+  const contentToRender = `<h2>${entry.title}</h2>` + state.origin?.content || entry.content;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +27,7 @@ const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
     fetchData();
   }, []);
 
-  return <Detail isLoading={state.isLoading} markdown={nhm.translate(contentToRender)} />;
+  return (<Detail isLoading={state.isLoading} markdown={nhm.translate(contentToRender)}  />);
 };
 
 export default FeedInDetail;

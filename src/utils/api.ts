@@ -50,6 +50,5 @@ export const getIconForFeed = async ({ feed_id }: MinifluxEntry): Promise<IconDa
 export const getOriginArticle = async ({ id }: MinifluxEntry): Promise<OriginArticle> =>
   requestApi<OriginArticle>(`/v1/entries/${id}/fetch-content`);
 
-
 export const toggleBookmark = async ({ id }: MinifluxEntry): Promise<boolean> =>
   (await requestApi<number>(`/v1/entries/${id}/bookmark`, "","PUT")) === 204;
