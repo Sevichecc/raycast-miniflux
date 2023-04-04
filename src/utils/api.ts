@@ -24,17 +24,17 @@ const requestApi = async <T>(
   return (await response.json()) as T;
 };
 
-export const fetchEntriesWithParams = async <T>(queryParams: string): Promise<T> =>
+export const getEntriesWithParams = async <T>(queryParams: string): Promise<T> =>
   requestApi<T>("/v1/entries", queryParams);
 
 export const search = async (query: string): Promise<MinifluxEntries> => {
   const { searchLimit } = getPreferenceValues<Preferences>();
-  return fetchEntriesWithParams<MinifluxEntries>(`?search=${query}${searchLimit ? "&limit=" + searchLimit : ""}`);
+  return getEntriesWithParams<MinifluxEntries>(`?search=${query}${searchLimit ? "&limit=" + searchLimit : ""}`);
 };
 
 export const getRecentEntries = async (): Promise<MinifluxEntries> => {
   const { feedLimit } = getPreferenceValues<Preferences>();
-  return fetchEntriesWithParams<MinifluxEntries>(`?status=unread&direction=desc&limit=${feedLimit}`);
+  return getEntriesWithParams<MinifluxEntries>(`?status=unread&direction=desc&limit=${feedLimit}`);
 };
 
 export const getEntryUrlInMiniflux = ({ id, status }: MinifluxEntry): string => {
@@ -44,10 +44,10 @@ export const getEntryUrlInMiniflux = ({ id, status }: MinifluxEntry): string => 
   return `${baseUrl}/${entryStatus}/entry/${id}`;
 };
 
-export const fetchIconForFeed = async ({ feed_id }: MinifluxEntry): Promise<IconData> =>
+export const getIconForFeed = async ({ feed_id }: MinifluxEntry): Promise<IconData> =>
    requestApi<IconData>(`/v1/feeds/${feed_id}/icon`);
 
-export const fetchOriginArticle = async ({ id }: MinifluxEntry): Promise<OriginArticle> =>
+export const getOriginArticle = async ({ id }: MinifluxEntry): Promise<OriginArticle> =>
   requestApi<OriginArticle>(`/v1/entries/${id}/fetch-content`);
 
 

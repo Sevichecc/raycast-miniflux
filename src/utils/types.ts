@@ -9,7 +9,7 @@ export interface Preferences {
 export interface State {
   isLoading: boolean;
   error?: MinifluxApiError;
-  origin?: originArticle;
+  origin?: OriginArticle;
   entries?: MinifluxEntry[];
 }
 
@@ -94,6 +94,6 @@ export interface IconData {
   mime_type: string;
   data: string;
 }
-export interface originArticle {
+export interface OriginArticle {
   content: string
 }
