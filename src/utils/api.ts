@@ -1,17 +1,19 @@
 import fetch from "node-fetch";
 import { getPreferenceValues } from "@raycast/api";
-import { Preferences, MinifluxApiError, MinifluxEntries } from "./types";
+import { Preferences, MinifluxApiError, MinifluxEntries, MinifluxEntry, IconData,originArticle } from "./types";
 
-const fetchEntries = async (queryParams: string): Promise<MinifluxEntries> => {
-  const preference: Preferences = getPreferenceValues();
-  const { baseUrl, apiKey } = preference;
+const removeTrailingSlash = (baseUrl: string): string =>
+  baseUrl.charAt(baseUrl.length - 1) === "/" ? baseUrl.slice(0, -1) : baseUrl;
 
-  const apiUrl = baseUrl.charAt(baseUrl.length - 1) === "/" ? baseUrl.slice(0, -1) : baseUrl;
+const fetchData = async <T>(urlPath: string, queryParams?: string): Promise<T> => {
+  const preferences: Preferences = getPreferenceValues();
+  const { baseUrl, apiKey } = preferences;
+  const apiUrl = removeTrailingSlash(baseUrl);
 
-  const response = await fetch(`${apiUrl}/v1/entries${queryParams}`, {
+  const response = await fetch(apiUrl + urlPath + (queryParams || ""), {
     method: "get",
     headers: {
-      "X-Auth-Token": `${apiKey}`,
+      "X-Auth-Token": apiKey,
     },
   });
 
@@ -19,19 +21,39 @@ const fetchEntries = async (queryParams: string): Promise<MinifluxEntries> => {
     throw (await response.json()) as MinifluxApiError;
   }
 
-  return (await response.json()) as MinifluxEntries;
+  return (await response.json()) as T;
 };
 
-export const searchEntries = async (q: string): Promise<MinifluxEntries> => {
-  const preference: Preferences = getPreferenceValues();
-  const { searchLimit } = preference;
-
-  return await fetchEntries(`?search=${q}&limit=${searchLimit}`);
+export const fetchEntriesWithParams = async <T>(queryParams: string): Promise<T> => {
+  return await fetchData<T>("/v1/entries", queryParams);
 };
 
-export const getLatestEntries = async (): Promise<MinifluxEntries> => {
-  const preference: Preferences = getPreferenceValues();
-  const { feedLimit, entryStatus } = preference;
+export const search = async (query: string): Promise<MinifluxEntries> => {
+  const preferences: Preferences = getPreferenceValues();
+  const { searchLimit } = preferences;
 
-  return await fetchEntries(`?${entryStatus && ""}&limit=${feedLimit}`);
+  return await fetchEntriesWithParams(`?search=${query}${searchLimit ? "&limit=" + searchLimit : ""}`);
+};
+
+export const getRecentEntries = async (): Promise<MinifluxEntries> => {
+  const preferences: Preferences = getPreferenceValues();
+  const { feedLimit } = preferences;
+
+  return await fetchEntriesWithParams(`?status=unread&direction=desc&limit=${feedLimit}`);
+};
+
+export const getEntryUrlInMiniflux = ({ id, status }: MinifluxEntry): string => {
+  const preferences: Preferences = getPreferenceValues();
+  const { baseUrl } = preferences;
+  const entryStatus = status === "read" ? "history" : status;
+
+  return `${baseUrl}/${entryStatus}/entry/${id}`;
+};
+
+export const fetchIconForFeed = async ({ feed_id }: MinifluxEntry): Promise<IconData> => {
+  return await fetchData<IconData>(`/v1/feeds/${feed_id}/icon`);
+};
+
+export const fetchOriginArticle = async ({ id }: MinifluxEntry): Promise<originArticle> => {
+  return await fetchData(`/v1/entries/${id}/fetch-content`);
 };
