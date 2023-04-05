@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { getPreferenceValues } from "@raycast/api";
-import { Preferences, MinifluxApiError, MinifluxEntries, MinifluxEntry, IconData, OriginArticle } from "./types";
+import { Preferences, MinifluxApiError, MinifluxEntries, MinifluxEntry, IconData, OriginArticle, Category } from "./types";
 
 const removeTrailingSlash = (baseUrl: string): string => baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl
 
@@ -49,6 +49,8 @@ export const getIconForFeed = async ({ feed_id }: MinifluxEntry): Promise<IconDa
 
 export const getOriginArticle = async ({ id }: MinifluxEntry): Promise<OriginArticle> =>
   requestApi<OriginArticle>(`/v1/entries/${id}/fetch-content`);
+
+export const getCategories = async (): Promise<Category> => requestApi<Category>('/v1/categories')
 
 export const toggleBookmark = async ({ id }: MinifluxEntry): Promise<boolean> =>
   (await requestApi<number>(`/v1/entries/${id}/bookmark`, "","PUT")) === 204;
