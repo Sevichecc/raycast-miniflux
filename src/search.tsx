@@ -25,14 +25,16 @@ export default function SearchEntries() {
       <List
         isLoading={state.isLoading}
         onSearchTextChange={setSearchText}
-        throttle={true}
         navigationTitle="Search entries"
         searchBarPlaceholder="Search from your miniflux feeds"
         searchBarAccessory={<FilterDropdown handleFilter={handleFilter} />}
+        throttle
       >
-        {filteredEntries().map((entry) => (
-          <EntryListItem key={entry.id} entry={entry} />
-        ))}
+        <List.Section title={`Found Enties`} subtitle={state.total?.toString() || "0"}>
+          {filteredEntries().map((entry) => (
+            <EntryListItem key={entry.id} entry={entry} />
+          ))}
+        </List.Section>
       </List>
     </>
   );

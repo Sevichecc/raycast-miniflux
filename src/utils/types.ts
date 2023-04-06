@@ -11,12 +11,14 @@ export interface State {
   error?: MinifluxApiError;
   origin?: OriginArticle;
   entries?: MinifluxEntry[];
+  total?: number;
 }
 
 export interface MinifluxApiError {
   code: string;
   error_message: string;
 }
+
 export interface MinifluxEntries {
   total: number,
   entries: MinifluxEntry[]

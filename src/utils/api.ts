@@ -29,6 +29,7 @@ export const getEntriesWithParams = async <T>(queryParams: string): Promise<T> =
 
 export const search = async (query: string): Promise<MinifluxEntries> => {
   const { searchLimit } = getPreferenceValues<Preferences>();
+  
   return getEntriesWithParams<MinifluxEntries>(`?search=${query}${searchLimit ? "&limit=" + searchLimit : ""}`);
 };
 
