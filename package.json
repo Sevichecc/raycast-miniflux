@@ -3,8 +3,8 @@
   "name": "miniflux",
   "title": "Miniflux",
   "description": "A raycast extension for Miniflux",
-  "icon": "command-icon.png",
-  "author": "SevicheCC",
+  "icon": "miniflux-icon.png",
+  "author": "Seviche CC",
   "license": "MIT",
   "commands": [
     {
