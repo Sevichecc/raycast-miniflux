@@ -9,7 +9,7 @@ const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
   const [state, setState] = useState<State>({ isLoading: true });
   const handleError = useErrorHandler();
   const nhm = new NodeHtmlMarkdown();
-  const contentToRender = `<h2>${entry.title}</h2>` + state.origin?.content || entry.content;
+  const contentToRender = `<h2>${entry.title}</h2>` + (state.origin?.content || entry.content);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +18,7 @@ const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
         const origin = await apiServer.getOriginArticle(entry);
         setState({ origin, isLoading: false });
         showToast(Toast.Style.Success, "Original article has been loaded");
+        await apiServer.updateEntries(entry.id, "read");
       } catch (error) {
         handleError(error as MinifluxApiError);
         setState((oldState) => ({ ...oldState, isLoading: false }));

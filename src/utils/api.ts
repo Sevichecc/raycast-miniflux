@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch, { HeadersInit } from "node-fetch";
 import { getPreferenceValues } from "@raycast/api";
 import {
   Preferences,
@@ -8,6 +8,8 @@ import {
   IconInfo,
   OriginArticle,
   Category,
+  UpdateEntryRequest,
+  EntryStatus,
 } from "./types";
 
 const removeTrailingSlash = (baseUrl: string): string => (baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl);
@@ -15,15 +17,26 @@ const removeTrailingSlash = (baseUrl: string): string => (baseUrl.endsWith("/") 
 const requestApi = async <T>(
   endpoint: string,
   queryParams?: string,
-  method: "GET" | "POST" | "PUT" = "GET"
+  method: "GET" | "POST" | "PUT" = "GET",
+  body?: UpdateEntryRequest
 ): Promise<T> => {
   const { baseUrl, apiKey } = getPreferenceValues<Preferences>();
   const apiUrl = removeTrailingSlash(baseUrl);
 
+  const headers: HeadersInit = { "X-Auth-Token": apiKey };
+  if (method === "POST" || method === "PUT") {
+    headers["Content-Type"] = "application/json";
+  }
+
   const response = await fetch(apiUrl + endpoint + (queryParams || ""), {
     method,
-    headers: { "X-Auth-Token": apiKey },
+    headers,
+    body: JSON.stringify(body),
   });
+  
+  if (response.status === 204) {
+    return response.status as unknown as T;
+  }
 
   if (!response.ok) {
     throw (await response.json()) as MinifluxApiError;
@@ -63,6 +76,12 @@ const getCategories = async (): Promise<Category[]> => requestApi<Category[]>("/
 const toggleBookmark = async ({ id }: MinifluxEntry): Promise<boolean> =>
   (await requestApi<number>(`/v1/entries/${id}/bookmark`, "", "PUT")) === 204;
 
+const updateEntries = async (id: number, status: EntryStatus): Promise<boolean> =>
+  (await requestApi<number>(`/v1/entries`, "", "PUT", {
+    entry_ids: [id],
+    status,
+  })) === 204;
+
 export default {
   search,
   getRecentEntries,
@@ -71,4 +90,5 @@ export default {
   getOriginArticle,
   getCategories,
   toggleBookmark,
+  updateEntries,
 };

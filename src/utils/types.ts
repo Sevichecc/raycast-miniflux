@@ -96,6 +96,12 @@ export interface IconInfo {
   mime_type: string;
   data: string;
 }
+
 export interface OriginArticle {
   content: string;
+}
+
+export interface UpdateEntryRequest {
+  entry_ids: number[],
+  status: EntryStatus
 }
