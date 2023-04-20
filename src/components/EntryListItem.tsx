@@ -18,4 +18,4 @@ const EntryListItem = ({ entry }: { entry: MinifluxEntry }) => {
   );
 };
 
-export default EntryListItem
+export default EntryListItem;
