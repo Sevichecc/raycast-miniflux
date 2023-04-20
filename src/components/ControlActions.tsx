@@ -1,10 +1,9 @@
 /* eslint-disable @raycast/prefer-title-case */
 import { useCallback } from "react";
 import { ActionPanel, Action, showToast, Toast, Icon } from "@raycast/api";
-import { getEntryUrlInMiniflux, toggleBookmark } from "../utils/api";
+import apiServer from "../utils/api";
 import { MinifluxEntry } from "../utils/types";
 import FeedInDetail from "./FeedInDetail";
-import EntryMetadata from "./EntryMetadata";
 
 const ControlActions = ({ entry }: { entry: MinifluxEntry }) => {
   const handleBookmarkd = useCallback(
@@ -12,7 +11,7 @@ const ControlActions = ({ entry }: { entry: MinifluxEntry }) => {
       try {
         showToast(Toast.Style.Animated, "Bookmarking article");
 
-        await toggleBookmark(entry);
+        await apiServer.toggleBookmark(entry);
 
         showToast(Toast.Style.Success, `The article has been ${entry.starred ? "unstarred" : "starred"}`);
       } catch (error) {
@@ -28,7 +27,7 @@ const ControlActions = ({ entry }: { entry: MinifluxEntry }) => {
       <Action.OpenInBrowser
         title="Open in Miniflux"
         shortcut={{ modifiers: ["opt"], key: "arrowDown" }}
-        url={getEntryUrlInMiniflux(entry)}
+        url={apiServer.getEntryUrlInMiniflux(entry)}
         icon={Icon.Link}
       />
       <Action.Push title="Fetch original Article" target={<FeedInDetail entry={entry} />} icon={Icon.SaveDocument} />

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { MinifluxApiError, MinifluxEntries, State } from "./types";
-import { search } from "./api";
+import apiServer from "./api";
 import { useErrorHandler } from "../utils/useErrorHandler";
 import { Cache } from "@raycast/api";
 
 const cache = new Cache();
 
-export const useSearchEntries = (searchText: string) => {
+export const useSearchEntries = (searchText: string): State => {
   const cached = cache.get("search-results");
 
   const [state, setState] = useState<State>({
@@ -18,12 +18,14 @@ export const useSearchEntries = (searchText: string) => {
 
   const fetchData = useCallback(async () => {
     if (!searchText) return;
-    
+
     setState((oldState) => ({ ...oldState, isLoading: true }));
 
     try {
-      const { total, entries }: MinifluxEntries = await search(searchText);
+      const { total, entries }: MinifluxEntries = await apiServer.search(searchText);
+
       setState({ total, entries, isLoading: false });
+
       cache.set("search-results", JSON.stringify(entries));
     } catch (error) {
       handleError(error as MinifluxApiError);
