@@ -19,14 +19,13 @@ export const useEntryIcon = (entry: MinifluxEntry): Image.ImageLike => {
       } else {
         try {
           const { data }: IconInfo = await apiServer.getIconForFeed(entry);
-
           const iconSource = "data:" + data;
-          cache.set(`icon-${entry.feed_id}`, iconSource);
 
           setIcon({
             source: iconSource,
             mask: Image.Mask.RoundedRectangle,
           });
+          cache.set(`icon-${entry.feed_id}`, iconSource);
         } catch (error) {
           console.error(`Error fetching icon for feed: ${entry.feed.title}`, error);
           setIcon({ source: "" });
