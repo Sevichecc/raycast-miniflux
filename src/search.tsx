@@ -26,15 +26,9 @@ export default function SearchEntries() {
         searchBarAccessory={<FilterDropdown handleFilter={setFilterValue} filter="status" />}
         throttle
       >
-        {searchText ? (
-          <List.Section title={`Found Enties`} subtitle={state.total?.toString() || "0"}>
-            {filteredEntries.map((entry) => (
-              <EntryListItem key={entry.id} entry={entry} />
-            ))}
-          </List.Section>
-        ) : (
-          filteredEntries.map((entry) => <EntryListItem key={entry.id} entry={entry} />)
-        )}
+        {filteredEntries.map((entry) => (
+          <EntryListItem key={entry.id} entry={entry} />
+        ))}
       </List>
     </>
   );

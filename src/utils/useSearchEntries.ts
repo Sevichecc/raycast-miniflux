@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { MinifluxApiError, MinifluxEntries, State } from "./types";
 import apiServer from "./api";
 import { useErrorHandler } from "../utils/useErrorHandler";
-import { Cache } from "@raycast/api";
+import { Cache, Toast, showToast } from "@raycast/api";
 
 const cache = new Cache();
 
@@ -16,22 +16,32 @@ export const useSearchEntries = (searchText: string): State => {
 
   const handleError = useErrorHandler();
 
+  const message = (total: number) => {
+    switch (total) {
+      case 0:
+        return "No results found. Try a different query ヽ(´ー` )┌ .";
+      case 1:
+        return "1 result found (^０^)ノ !";
+      default:
+        return `${total} results found ! ヽ(>∀ <☆)ノ`;
+    }
+  };
+
   const fetchData = useCallback(async () => {
     if (!searchText) return;
 
     setState((oldState) => ({ ...oldState, isLoading: true }));
-
     try {
+      showToast(Toast.Style.Animated, "Searching for entries... ~(>_<~)");
       const { total, entries }: MinifluxEntries = await apiServer.search(searchText);
-
       setState({ total, entries, isLoading: false });
-
+      showToast(Toast.Style.Success, message(total));
       cache.set("search-results", JSON.stringify(entries));
     } catch (error) {
       handleError(error as MinifluxApiError);
       setState((oldState) => ({ ...oldState, isLoading: false }));
     }
-  }, [searchText]);
+  }, [searchText, handleError]);
 
   useEffect(() => {
     fetchData();
