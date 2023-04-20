@@ -12,7 +12,7 @@ const nhm = new NodeHtmlMarkdown();
 
 export default function readRecentEntries() {
   const cached = cache.get("latest-entries");
-  const [filterValue, setFilterValue] = useState("all");
+  const [filterValue, setFilterValue] = useState("showAll");
 
   const [state, setState] = useState<State>({
     entries: cached ? JSON.parse(cached) : [],
@@ -22,7 +22,8 @@ export default function readRecentEntries() {
   const handleError = useErrorHandler();
 
   const filteredEntries = useMemo(
-    () => state.entries?.filter((entry) => filterValue === "all" || entry.feed.category.title === filterValue) || [],
+    () =>
+      state.entries?.filter((entry) => filterValue === "showAll" || entry.feed.category.title === filterValue) || [],
     [filterValue, state.entries]
   );
 
