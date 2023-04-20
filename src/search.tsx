@@ -1,5 +1,5 @@
 import { List } from "@raycast/api";
-import { useState, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { useSearchEntries } from "./utils/useSearchEntries";
 import EntryListItem from "./components/EntryListItem";
 import FilterDropdown from "./components/FilterDropdown";
@@ -9,7 +9,7 @@ export default function SearchEntries() {
   const [filterValue, setFilterValue] = useState("all");
   const state = useSearchEntries(searchText);
 
-  const filteredEntries = useCallback(() => {
+  const filteredEntries = useMemo(() => {
     if (filterValue === "starred") {
       return state.entries?.filter((entry) => entry.starred === true) || [];
     }
@@ -28,12 +28,12 @@ export default function SearchEntries() {
       >
         {searchText ? (
           <List.Section title={`Found Enties`} subtitle={state.total?.toString() || "0"}>
-            {filteredEntries().map((entry) => (
+            {filteredEntries.map((entry) => (
               <EntryListItem key={entry.id} entry={entry} />
             ))}
           </List.Section>
         ) : (
-          filteredEntries().map((entry) => <EntryListItem key={entry.id} entry={entry} />)
+          filteredEntries.map((entry) => <EntryListItem key={entry.id} entry={entry} />)
         )}
       </List>
     </>
