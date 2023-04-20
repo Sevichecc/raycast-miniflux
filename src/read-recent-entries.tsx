@@ -54,7 +54,7 @@ export default function readRecentEntries() {
       throttle={true}
       navigationTitle="Search entries"
       searchBarPlaceholder="Search from your miniflux feeds"
-      searchBarAccessory={<FilterDropdown handleFilter={setFilterValue} filter="category" />}
+      searchBarAccessory={<FilterDropdown handleFilter={setFilterValue} filter="categories" />}
     >
       {filteredEntries.map((entry) => (
         <List.Item
