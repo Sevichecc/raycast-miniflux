@@ -6,6 +6,7 @@ import ControlActions from "./components/ControlActions";
 import { NodeHtmlMarkdown } from "node-html-markdown";
 import { useErrorHandler } from "./utils/useErrorHandler";
 import FilterDropdown from "./components/FilterDropdown";
+import { useEntryIcon } from "./utils/useEntryIcon";
 
 const cache = new Cache();
 const nhm = new NodeHtmlMarkdown();
@@ -13,7 +14,6 @@ const nhm = new NodeHtmlMarkdown();
 export default function readRecentEntries() {
   const cached = cache.get("latest-entries");
   const [filterValue, setFilterValue] = useState("showAll");
-
   const [state, setState] = useState<State>({
     entries: cached ? JSON.parse(cached) : [],
     isLoading: true,
@@ -63,6 +63,7 @@ export default function readRecentEntries() {
           keywords={[...entry.title]}
           detail={<List.Item.Detail markdown={nhm.translate(`<h2>${entry.title}</h2>${entry.content}`)} />}
           actions={<ControlActions entry={entry} />}
+          icon={useEntryIcon(entry)}
         />
       ))}
     </List>

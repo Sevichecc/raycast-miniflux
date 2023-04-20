@@ -1,40 +1,31 @@
-import { Image, Cache } from "@raycast/api";
-import { MinifluxEntry, IconInfo } from "./types";
+import { Image, Cache, Icon } from "@raycast/api";
+import { MinifluxEntry } from "./types";
 import { useEffect, useState } from "react";
-import apiServer from "./api";
+import { getFavicon } from "@raycast/utils";
 
 const cache = new Cache();
 
 export const useEntryIcon = (entry: MinifluxEntry): Image.ImageLike => {
-  const [icon, setIcon] = useState<Image.ImageLike>({ source: "" });
   const cachedIcon = cache.get(`icon-${entry.feed_id}`);
+  const [icon, setIcon] = useState<Image.ImageLike>(
+    cachedIcon
+      ? JSON.parse(cachedIcon)
+      : {
+          source: "",
+          mask: Image.Mask.RoundedRectangle,
+        }
+  );
 
   useEffect(() => {
-    const fetchIcon = async () => {
-      if (cachedIcon) {
-        setIcon({
-          source: cachedIcon,
-          mask: Image.Mask.RoundedRectangle,
-        });
-      } else {
-        try {
-          const { data }: IconInfo = await apiServer.getIconForFeed(entry);
-          const iconSource = "data:" + data;
-
-          setIcon({
-            source: iconSource,
-            mask: Image.Mask.RoundedRectangle,
-          });
-          cache.set(`icon-${entry.feed_id}`, iconSource);
-        } catch (error) {
-          console.error(`Error fetching icon for feed: ${entry.feed.title}`, error);
-          setIcon({ source: "" });
-        }
-      }
-    };
-
-    fetchIcon();
-  }, [entry.feed_id, cachedIcon]);
+    if (!cachedIcon) {
+      const fallbackIcon = getFavicon(entry.feed.site_url, {
+        mask: Image.Mask.RoundedRectangle,
+        fallback: Icon.Paragraph,
+      });
+      setIcon(fallbackIcon);
+      cache.set(`icon-${entry.feed_id}`, JSON.stringify(fallbackIcon));
+    }
+  }, [entry.feed.site_url]);
 
   return icon;
 };
