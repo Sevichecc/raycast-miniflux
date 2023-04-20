@@ -2,27 +2,27 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "miniflux",
   "title": "Miniflux",
-  "description": "A raycast extension for Miniflux",
+  "description": "A Raycast extension for Miniflux",
   "icon": "miniflux-icon.png",
   "author": "SevicheCC",
   "license": "MIT",
   "commands": [
     {
-      "name": "add-subscribe",
-      "title": "Add subscribe",
-      "description": "",
+      "name": "add-subscrition",
+      "title": "Add Subscrition",
+      "description": "Add new feed subscrition",
       "mode": "view"
     },
     {
       "name": "search",
       "title": "Search",
-      "description": "",
+      "description": "Search in entries",
       "mode": "view"
     },
     {
-      "name": "read-latest-feed",
-      "title": "Read latest feeds",
-      "description": "",
+      "name": "read-recent-entries",
+      "title": "Read Recent Entries",
+      "description": "Read your recent entries in Raycast",
       "mode": "view"
     }
   ],
