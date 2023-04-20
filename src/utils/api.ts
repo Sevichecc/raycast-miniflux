@@ -29,7 +29,7 @@ export const getEntriesWithParams = async <T>(queryParams: string): Promise<T> =
 
 export const search = async (query: string): Promise<MinifluxEntries> => {
   const { searchLimit } = getPreferenceValues<Preferences>();
-  
+
   return getEntriesWithParams<MinifluxEntries>(`?search=${query}${searchLimit ? "&limit=" + searchLimit : ""}`);
 };
 
@@ -45,13 +45,13 @@ export const getEntryUrlInMiniflux = ({ id, status }: MinifluxEntry): string => 
   return `${baseUrl}/${entryStatus}/entry/${id}`;
 };
 
-export const getIconForFeed = async ({ feed_id }: MinifluxEntry): Promise<IconData> =>
+export const getIconForFeed = async ({ feed_id }: MinifluxEntry): Promise<IconData> => 
    requestApi<IconData>(`/v1/feeds/${feed_id}/icon`);
 
 export const getOriginArticle = async ({ id }: MinifluxEntry): Promise<OriginArticle> =>
   requestApi<OriginArticle>(`/v1/entries/${id}/fetch-content`);
 
-export const getCategories = async (): Promise<Category> => requestApi<Category>('/v1/categories')
+export const getCategories = async (): Promise<Category[]> => requestApi<Category[]>('/v1/categories')
 
 export const toggleBookmark = async ({ id }: MinifluxEntry): Promise<boolean> =>
   (await requestApi<number>(`/v1/entries/${id}/bookmark`, "","PUT")) === 204;
