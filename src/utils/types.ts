@@ -20,11 +20,11 @@ export interface MinifluxApiError {
 }
 
 export interface MinifluxEntries {
-  total: number,
-  entries: MinifluxEntry[]
+  total: number;
+  entries: MinifluxEntry[];
 }
 
-export type EntryStatus = "read" | "unread" | "removed"
+export type EntryStatus = "read" | "unread" | "removed";
 
 export interface MinifluxEntry {
   id: number;
@@ -91,11 +91,11 @@ export interface Icon {
   icon_id: number;
 }
 
-export interface IconData {
+export interface IconInfo {
   id: number;
   mime_type: string;
   data: string;
 }
 export interface OriginArticle {
-  content: string
+  content: string;
 }
