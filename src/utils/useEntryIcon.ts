@@ -25,7 +25,7 @@ export const useEntryIcon = (entry: MinifluxEntry): Image.ImageLike => {
       setIcon(fallbackIcon);
       cache.set(`icon-${entry.feed_id}`, JSON.stringify(fallbackIcon));
     }
-  }, [entry.feed.site_url]);
+  }, [entry.feed_id, entry.feed.site_url]);
 
   return icon;
 };

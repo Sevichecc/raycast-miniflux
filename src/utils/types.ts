@@ -91,17 +91,43 @@ export interface Icon {
   icon_id: number;
 }
 
-export interface IconInfo {
-  id: number;
-  mime_type: string;
-  data: string;
-}
+// export interface IconInfo {
+//   id: number;
+//   mime_type: string;
+//   data: string;
+// }
 
 export interface OriginArticle {
   content: string;
 }
 
-export interface UpdateEntryRequest {
-  entry_ids: number[],
-  status: EntryStatus
+export interface CreateFeedRequest {
+  feed_url: string;
+  category_id: number;
+  username?: string;
+  password?: string;
+  crawler?: boolean;
+  user_agent?: string;
+  scraper_rules?: string;
+  rewrite_rules?: string;
+  blocklist_rules?: string;
+  keeplist_rules?: string;
+  disabled?: boolean;
+  ignore_http_cache?: boolean;
+  fetch_via_proxy?: boolean;
+  enableAdvance?: boolean;
+}
+
+export interface DiscoverRequest {
+  url: string;
+  username?: string;
+  password?: string;
+  user_agent?: string;
+  fetch_via_proxy?: string;
+}
+
+export interface DiscoveredFeed {
+  url: string;
+  title: string;
+  type: "atom" | "rss" | "json";
 }
