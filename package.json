@@ -8,21 +8,21 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "add-subscrition",
-      "title": "Add Subscrition",
-      "description": "Add new feed subscrition",
+      "name": "add-subscription",
+      "title": "Subscribe to Feed",
+      "description": "Subscribe to a new feed",
       "mode": "view"
     },
     {
       "name": "search",
-      "title": "Search",
-      "description": "Search in entries",
+      "title": "Search Feeds",
+      "description": "Search entries in your subscribed feeds",
       "mode": "view"
     },
     {
       "name": "read-recent-entries",
-      "title": "Read Recent Entries",
-      "description": "Read your recent entries in Raycast",
+      "title": "Read Recent Feed Entries",
+      "description": "Read the recent entries from your subscribed feeds in Raycast",
       "mode": "view"
     }
   ],
