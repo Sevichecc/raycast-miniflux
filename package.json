@@ -23,13 +23,20 @@
       "name": "read-recent-entries",
       "title": "Read Recent Feed Entries",
       "description": "Read the recent entries from your subscribed feeds in Raycast",
-      "mode": "no-view"
+      "mode": "view"
     },
     {
       "name": "open-miniflux",
-      "title": "Open Miniflux in Browser",
-      "description": "Open Miniflux in Browser",
+      "title": "Open Miniflux",
+      "description": "Open Miniflux RSS reader",
       "mode": "view"
+    },
+    {
+      "name": "refresh-all-feeds",
+      "title": "Refresh All Feeds",
+      "description": "Refresh all RSS feeds",
+      "mode": "no-view",
+      "interval": "1h"
     }
   ],
   "preferences": [
