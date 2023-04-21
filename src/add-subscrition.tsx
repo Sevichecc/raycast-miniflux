@@ -1,6 +1,6 @@
 import { Form, Action, ActionPanel, Icon, popToRoot, showToast, Toast } from "@raycast/api";
 import { useCategories } from "./utils/useCategories";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { DiscoverRequest, CreateFeedRequest, DiscoveredFeed, MinifluxApiError } from "./utils/types";
 import { useErrorHandler } from "./utils/useErrorHandler";
 import apiServer from "./utils/api";
@@ -36,7 +36,7 @@ export default function AddSubscription() {
   const [isLoading, setIsLoading] = useState(false);
   const handleError = useErrorHandler();
 
-  const discoverFeeds = async (values: DiscoverRequest & CreateFeedRequest) => {
+  const discoverFeeds = useCallback(async (values: DiscoverRequest & CreateFeedRequest) => {
     setHaveDiscovered(true);
     setIsLoading(true);
     showToast(Toast.Style.Animated, "Finding Feeds...〜(＞＜)〜");
@@ -51,9 +51,9 @@ export default function AddSubscription() {
     showToast(Toast.Style.Success, `${results.length} feeds have been found ＼(＾▽＾)／`);
     setIsLoading(false);
     setFeeds(results);
-  };
+  }, []);
 
-  const createFeeds = async (values: CreateFeedRequest) => {
+  const createFeeds = useCallback(async (values: CreateFeedRequest) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { enableAdvance: _, ...remainingSettings } = values;
     setIsLoading(true);
@@ -68,7 +68,7 @@ export default function AddSubscription() {
     } finally {
       setTimeout(() => popToRoot(), 3000);
     }
-  };
+  }, []);
 
   if (haveDiscovered) {
     return (

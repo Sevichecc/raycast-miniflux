@@ -90,6 +90,8 @@ const discoverFeed = async (setting: DiscoverRequest): Promise<DiscoveredFeed[]>
 const createFeed = async (setting: CreateFeedRequest): Promise<{ feed_id: number }> =>
   await requestApi<{ feed_id: number }>("/v1/feeds", "", "POST", setting);
 
+const refreshAllFeed = async (): Promise<boolean> => (await requestApi<number>(`/v1/feeds/refresh`, "", "PUT")) === 204;
+
 export default {
   search,
   getRecentEntries,
@@ -100,4 +102,5 @@ export default {
   updateEntries,
   discoverFeed,
   createFeed,
+  refreshAllFeed,
 };
