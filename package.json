@@ -6,6 +6,10 @@
   "icon": "miniflux-icon.png",
   "author": "SevicheCC",
   "license": "MIT",
+  "categories": [
+    "News",
+    "Web"
+  ],
   "commands": [
     {
       "name": "add-subscription",
@@ -17,13 +21,33 @@
       "name": "search",
       "title": "Search Feeds",
       "description": "Search entries in your subscribed feeds",
-      "mode": "view"
+      "mode": "view",
+      "preferences": [
+        {
+          "name": "searchLimit",
+          "type": "textfield",
+          "required": false,
+          "title": "Max search results",
+          "description": "high numbers could lead to worse performance",
+          "placeholder": "10"
+        }
+      ]
     },
     {
       "name": "read-recent-entries",
       "title": "Read Recent Feed Entries",
       "description": "Read the recent entries from your subscribed feeds in Raycast",
-      "mode": "view"
+      "mode": "view",
+      "preferences": [
+        {
+          "name": "feedLimit",
+          "type": "textfield",
+          "required": false,
+          "title": "The latest feeds show on first page",
+          "description": "High numbers could lead to poor performance.",
+          "placeholder": "30"
+        }
+      ]
     },
     {
       "name": "open-miniflux",
@@ -44,41 +68,25 @@
       "name": "baseUrl",
       "type": "textfield",
       "required": true,
-      "title": "Miniflux's URL",
-      "description": "Your Miniflux server's URL",
-      "placeholder": "such as: https://hosting.miniflux.app/"
+      "title": "Miniflux URL",
+      "description": "The URL of your Miniflux server",     
+      "placeholder": "E.g. https://hosting.miniflux.app/"
     },
     {
       "name": "apiKey",
       "type": "password",
       "required": true,
       "title": "API Key",
-      "description": "Your Miniflux API Key taken from 'Settings > API Keys > Create a new API key' in Miniflux",
+      "description": "Your Miniflux API key from 'Settings > API Keys > Create a new API key' in Miniflux",
       "placeholder": "Enter your Miniflux API Key."
-    },
-    {
-      "name": "searchLimit",
-      "type": "textfield",
-      "required": false,
-      "title": "Max search results",
-      "description": "high numbers could lead to worse performance",
-      "placeholder": "10"
-    },
-    {
-      "name": "feedLimit",
-      "type": "textfield",
-      "required": false,
-      "title": "The latest feed show on first page",
-      "description": "high numbers could lead to worse performance",
-      "placeholder": "30"
     },
     {
       "name": "readwiseToken",
       "type": "password",
       "required": false,
-      "title": "Readwise AccessToken",
-      "description": "Generate token at: https://readwise.io/access_token",
-      "placeholder": "Generate token at: https://readwise.io/access_toke"
+      "title": "Readwise Access Token",
+      "description": "Generate a token at: https://readwise.io/access_token",
+      "placeholder": "Generate a token at: https://readwise.io/access_toke"
     }
   ],
   "dependencies": {

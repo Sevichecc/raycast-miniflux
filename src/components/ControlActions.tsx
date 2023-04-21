@@ -11,10 +11,10 @@ const ControlActions = ({ entry }: { entry: MinifluxEntry }) => {
   const handleBookmarkd = useCallback(
     async (entry: MinifluxEntry): Promise<void> => {
       try {
-        showToast(Toast.Style.Animated, "Bookmarking article");
+        showToast(Toast.Style.Animated, `${entry.starred ? "Unstarred" : "Starred"} entry`);
         await apiServer.toggleBookmark(entry);
 
-        showToast(Toast.Style.Success, `The article has been ${entry.starred ? "unstarred" : "starred"}`);
+        showToast(Toast.Style.Success, `The entry has been ${entry.starred ? "unstarred" : "starred"}`);
       } catch (error) {
         showToast(Toast.Style.Failure, `Failed to ${entry.starred ? "unstar" : "star"} the article`);
       }
