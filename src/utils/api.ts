@@ -12,6 +12,9 @@ import {
   CreateFeedRequest,
   DiscoverRequest,
   DiscoveredFeed,
+  ReadwiseRequest,
+  ReadwiseResponse,
+  ReadwiseError,
 } from "./types";
 
 const removeTrailingSlash = (baseUrl: string): string => (baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl);
@@ -92,6 +95,30 @@ const createFeed = async (setting: CreateFeedRequest): Promise<{ feed_id: number
 
 const refreshAllFeed = async (): Promise<boolean> => (await requestApi<number>(`/v1/feeds/refresh`, "", "PUT")) === 204;
 
+// Readwise API
+const saveToReadwise = async (body: ReadwiseRequest): Promise<ReadwiseResponse> => {
+  const { readwiseToken } = getPreferenceValues<Preferences>();
+
+  const response = await fetch("https://readwise.io/api/v3/save/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${readwiseToken}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (response.status === 201) {
+    throw new Error("Document already exist");
+  }
+
+  if (!response.ok) {
+    throw (await response.json()) as ReadwiseError;
+  }
+
+  return (await response.json()) as Promise<ReadwiseResponse>;
+};
+
 export default {
   search,
   getRecentEntries,
@@ -103,4 +130,5 @@ export default {
   discoverFeed,
   createFeed,
   refreshAllFeed,
+  saveToReadwise,
 };

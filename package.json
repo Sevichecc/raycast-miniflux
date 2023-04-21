@@ -33,7 +33,6 @@
       "required": true,
       "title": "Miniflux's URL",
       "description": "Your Miniflux server's URL",
-      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
       "placeholder": "such as: https://hosting.miniflux.app/"
     },
     {
@@ -42,7 +41,6 @@
       "required": true,
       "title": "API Key",
       "description": "Your Miniflux API Key taken from 'Settings > API Keys > Create a new API key' in Miniflux",
-      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
       "placeholder": "Enter your Miniflux API Key."
     },
     {
@@ -51,7 +49,6 @@
       "required": false,
       "title": "Max search results",
       "description": "high numbers could lead to worse performance",
-      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
       "placeholder": "10"
     },
     {
@@ -60,8 +57,15 @@
       "required": false,
       "title": "The latest feed show on first page",
       "description": "high numbers could lead to worse performance",
-      "link": "https://github.com/Sevichecc/raycast-miniflux-extension",
       "placeholder": "30"
+    },
+    {
+      "name": "readwiseToken",
+      "type": "password",
+      "required": false,
+      "title": "Readwise AccessToken",
+      "description": "Generate token at: https://readwise.io/access_token",
+      "placeholder": "Generate token at: https://readwise.io/access_toke"
     }
   ],
   "dependencies": {

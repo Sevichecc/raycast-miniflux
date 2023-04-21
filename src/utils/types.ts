@@ -4,6 +4,7 @@ export interface Preferences {
   searchLimit?: number;
   feedLimit?: number;
   entryStarred?: boolean;
+  readwiseToken?: string;
 }
 
 export interface State {
@@ -130,4 +131,20 @@ export interface DiscoveredFeed {
   url: string;
   title: string;
   type: "atom" | "rss" | "json";
+}
+
+export interface ReadwiseRequest {
+  url: string;
+  html?: string;
+  should_clean_html?: boolean;
+  saved_using?: string;
+}
+
+export interface ReadwiseResponse {
+  id: string;
+  url: string;
+}
+
+export interface ReadwiseError{
+  detail: string
 }

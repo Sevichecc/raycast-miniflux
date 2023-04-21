@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 import { ActionPanel, Action, showToast, Toast, Icon } from "@raycast/api";
 import apiServer from "../utils/api";
-import { MinifluxEntry, MinifluxApiError } from "../utils/types";
+import { MinifluxEntry, MinifluxApiError, ReadwiseError } from "../utils/types";
 import FeedInDetail from "./FeedInDetail";
 import { useErrorHandler } from "../utils/useErrorHandler";
 
@@ -32,15 +32,36 @@ const ControlActions = ({ entry }: { entry: MinifluxEntry }) => {
     }
   }, []);
 
+  const saveToReadwise = useCallback(
+    async ({ url }: MinifluxEntry) => {
+      try {
+        showToast(Toast.Style.Animated, "Saving to Readwise Reader ...ミヽ（。＞＜）ノ");
+        await apiServer.saveToReadwise({ url });
+        showToast(Toast.Style.Success, "Saved! ヽ(‘ ∇‘ )ノ");
+      } catch (error) {
+        const newError = error as ReadwiseError;
+        showToast(Toast.Style.Failure, newError.detail);
+      }
+    },
+    [entry]
+  );
+
   return (
     <ActionPanel title={entry.title}>
+      <Action.OpenInBrowser url={entry.url} title="Open in Browser with Original URL" />
       <Action.Push title="Read the Original Content" target={<FeedInDetail entry={entry} />} icon={Icon.Glasses} />
       <Action
         onAction={() => handleBookmarkd(entry)}
         title={`${entry.starred ? "Unstar" : "Star"}`}
         icon={entry.starred ? Icon.StarDisabled : Icon.Star}
+        shortcut={{ modifiers: ["opt"], key: "s" }}
       />
-      <Action.OpenInBrowser url={entry.url} title="Open in Browser with Original URL" />
+      <Action
+        onAction={() => saveToReadwise(entry)}
+        title={"Save To Readwise Reader"}
+        icon={{ source: "reader-logo.png" }}
+        shortcut={{ modifiers: ["opt"], key: "r" }}
+      />
       <Action.OpenInBrowser
         title="Open in Miniflux"
         shortcut={{ modifiers: ["opt"], key: "arrowDown" }}
