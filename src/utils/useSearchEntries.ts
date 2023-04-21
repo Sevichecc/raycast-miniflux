@@ -7,7 +7,7 @@ import { Cache, Toast, showToast } from "@raycast/api";
 const cache = new Cache();
 
 export const useSearchEntries = (searchText: string): State => {
-  const cached = cache.get("search-results");
+  const cached = cache.get("latest-entries");
 
   const [state, setState] = useState<State>({
     entries: cached ? JSON.parse(cached) : [],
@@ -36,7 +36,6 @@ export const useSearchEntries = (searchText: string): State => {
       const { total, entries }: MinifluxEntries = await apiServer.search(searchText);
       setState({ total, entries, isLoading: false });
       showToast(Toast.Style.Success, message(total));
-      cache.set("search-results", JSON.stringify(entries));
     } catch (error) {
       handleError(error as MinifluxApiError);
       setState((oldState) => ({ ...oldState, isLoading: false }));
