@@ -4,6 +4,7 @@ import { NodeHtmlMarkdown } from "node-html-markdown";
 import { MinifluxEntry, MinifluxApiError, State } from "../utils/types";
 import apiServer from "../utils/api";
 import { useErrorHandler } from "../utils/useErrorHandler";
+import ControlActions from "./ControlActions";
 
 const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
   const [state, setState] = useState<State>({ isLoading: true });
@@ -28,7 +29,7 @@ const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
     fetchData();
   }, []);
 
-  return <Detail isLoading={state.isLoading} markdown={nhm.translate(contentToRender)} />;
+  return <Detail isLoading={state.isLoading} markdown={nhm.translate(contentToRender)} actions={ <ControlActions entry={entry}/>} />;
 };
 
 export default FeedInDetail;
