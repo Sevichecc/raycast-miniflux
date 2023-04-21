@@ -18,14 +18,14 @@ export const useEntryIcon = (entry: MinifluxEntry): Image.ImageLike => {
 
   useEffect(() => {
     if (!cachedIcon) {
-      const fallbackIcon = getFavicon(entry.feed.site_url, {
+      const fallbackIcon = getFavicon(entry.url, {
         mask: Image.Mask.RoundedRectangle,
         fallback: Icon.Paragraph,
       });
       setIcon(fallbackIcon);
       cache.set(`icon-${entry.feed_id}`, JSON.stringify(fallbackIcon));
     }
-  }, [entry.feed_id, entry.feed.site_url]);
+  }, [entry.feed_id, entry.url]);
 
   return icon;
 };
