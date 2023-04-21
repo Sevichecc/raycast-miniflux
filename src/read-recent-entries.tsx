@@ -30,7 +30,7 @@ export default function readRecentEntries() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        showToast(Toast.Style.Animated, "Fetching latest entries.....・ヾ(。＞＜)シ");
+        showToast(Toast.Style.Animated, "Fetching latest entries.....─=≡Σ((( つ＞＜)つ");
 
         const { entries }: MinifluxEntries = await apiServer.getRecentEntries();
 
