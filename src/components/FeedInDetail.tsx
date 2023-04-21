@@ -29,7 +29,13 @@ const FeedInDetail = ({ entry }: { entry: MinifluxEntry }) => {
     fetchData();
   }, []);
 
-  return <Detail isLoading={state.isLoading} markdown={nhm.translate(contentToRender)} actions={ <ControlActions entry={entry}/>} />;
+  return (
+    <Detail
+      isLoading={state.isLoading}
+      markdown={nhm.translate(contentToRender)}
+      actions={<ControlActions entry={entry} />}
+    />
+  );
 };
 
 export default FeedInDetail;

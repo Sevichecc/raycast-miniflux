@@ -145,6 +145,6 @@ export interface ReadwiseResponse {
   url: string;
 }
 
-export interface ReadwiseError{
-  detail: string
+export interface ReadwiseError {
+  detail: string;
 }
