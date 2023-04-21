@@ -36,7 +36,7 @@
       "title": "Refresh All Feeds",
       "description": "Refresh all RSS feeds",
       "mode": "no-view",
-      "interval": "1h"
+      "interval": "1d"
     }
   ],
   "preferences": [
