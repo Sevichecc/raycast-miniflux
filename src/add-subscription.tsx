@@ -4,29 +4,7 @@ import { useState, useCallback } from "react";
 import { DiscoverRequest, CreateFeedRequest, DiscoveredFeed, MinifluxApiError } from "./utils/types";
 import { useErrorHandler } from "./utils/useErrorHandler";
 import apiServer from "./utils/api";
-
-const AdvanceOptions = () => {
-  return (
-    <>
-      <Form.Separator />
-      <Form.Checkbox id="crawler" label="Fetch original content" />
-      <Form.Checkbox id="fetch_via_proxy" label="Fetch via Proxy" />
-      <Form.Checkbox id="ignore_http_cache" label="Ignore HTTP cache" />
-      <Form.Checkbox id="disable" label="Disable" />
-      <Form.TextField
-        id="user_agent"
-        title="Override Default User Agent"
-        placeholder="Custom user agent for the feed"
-      />
-      <Form.TextField id="username" title="Feed Username" />
-      <Form.PasswordField id="password" title="Feed Password" />
-      <Form.TextField id="scraper_rules" title="Scraper Rules" placeholder="List of scraper rules" />
-      <Form.TextField id="rewrite_rules" title="Rewrite Rules" placeholder="List of rewrite rules" />
-      <Form.TextField id="blocklist_rules" title="Block Rules" />
-      <Form.TextField id="keeplist_rules" title="Keep Rules" />
-    </>
-  );
-};
+import AdvanceOptions from "./components/AdvanceOptions";
 
 export default function AddSubscription() {
   const categories = useCategories();
@@ -36,18 +14,13 @@ export default function AddSubscription() {
   const [isLoading, setIsLoading] = useState(false);
   const handleError = useErrorHandler();
 
-  const discoverFeeds = useCallback(async (values: DiscoverRequest & CreateFeedRequest) => {
+  const discoverFeeds = useCallback(async (url: DiscoverRequest) => {
     setHaveDiscovered(true);
     setIsLoading(true);
     showToast(Toast.Style.Animated, "Finding Feeds...〜(＞＜)〜");
 
-    const results = await apiServer.discoverFeed({
-      url: values.url,
-      username: values.username,
-      password: values.password,
-      user_agent: values.user_agent,
-      fetch_via_proxy: values.fetch_via_proxy,
-    });
+    const results = await apiServer.discoverFeed(url);
+
     showToast(Toast.Style.Success, `${results.length} feeds have been found ＼(＾▽＾)／`);
     setIsLoading(false);
     setFeeds(results);
@@ -59,7 +32,9 @@ export default function AddSubscription() {
     setIsLoading(true);
     try {
       showToast(Toast.Style.Animated, "Subscribing to the feed...__φ(．．;)");
+
       await apiServer.createFeed({ ...remainingSettings, category_id: values.category_id * 1 });
+
       setIsLoading(false);
       showToast(Toast.Style.Animated, "Subscribed! ＼(≧▽≦)／");
     } catch (error) {
