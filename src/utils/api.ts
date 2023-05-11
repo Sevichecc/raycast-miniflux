@@ -25,7 +25,12 @@ const requestApi = async <T>(
   method: "GET" | "POST" | "PUT" = "GET",
   body?: object
 ): Promise<T> => {
-  const { baseUrl, apiKey }: Preferences  = getPreferenceValues();
+  const { baseUrl, apiKey }: Preferences = getPreferenceValues();
+
+  if (!baseUrl || !apiKey) {
+    throw new Error("baseUrl and apikey are required!");
+  }
+
   const apiUrl = removeTrailingSlash(baseUrl);
 
   const headers: HeadersInit = { "X-Auth-Token": apiKey };
@@ -59,7 +64,7 @@ const search = async (query: string): Promise<MinifluxEntries> => {
 };
 
 const getRecentEntries = async (): Promise<MinifluxEntries> => {
-  const { feedLimit } : Preferences.ReadRecentEntries = getPreferenceValues();
+  const { feedLimit }: Preferences.ReadRecentEntries = getPreferenceValues();
   return getEntriesWithParams<MinifluxEntries>(`?status=unread&direction=desc&limit=${feedLimit}`);
 };
 
@@ -97,7 +102,7 @@ const refreshAllFeed = async (): Promise<boolean> => (await requestApi<number>(`
 
 // Readwise API
 const saveToReadwise = async (body: ReadwiseRequest): Promise<ReadwiseResponse> => {
-  const { readwiseToken } : Preferences = getPreferenceValues();
+  const { readwiseToken }: Preferences = getPreferenceValues();
 
   const response = await fetch("https://readwise.io/api/v3/save/", {
     method: "POST",
