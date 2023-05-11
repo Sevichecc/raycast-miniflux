@@ -2,11 +2,11 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@raycast/api':
-    specifier: ^1.51.0
-    version: 1.51.0(@types/node@18.8.3)(@types/react@18.0.9)
+    specifier: ^1.51.1
+    version: 1.51.1(@types/node@18.8.3)(@types/react@18.0.9)
   '@raycast/utils':
     specifier: ^1.6.1
-    version: 1.6.1(@raycast/api@1.51.0)
+    version: 1.6.1(@raycast/api@1.51.1)
   node-fetch:
     specifier: ^3.3.1
     version: 3.3.1
@@ -124,8 +124,8 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@raycast/api@1.51.0(@types/node@18.8.3)(@types/react@18.0.9):
-    resolution: {integrity: sha512-SiDguyZQLIuUQ1//shmhOAN18N/lrT8fuVjHuHnx/O/KDQf//0zwTLjd040ZQIiUiaINX0TfQ4BLngmjI0nOSg==}
+  /@raycast/api@1.51.1(@types/node@18.8.3)(@types/react@18.0.9):
+    resolution: {integrity: sha512-tEzIeE9HBNCHRebR+eWGRWvX+PA7ciT0U5MqHo2wGNavVq1B3elx9Kr48NF7LO9pZMTEwT1x6zqCKJuElCcizQ==}
     hasBin: true
     requiresBuild: true
     peerDependencies:
@@ -175,12 +175,12 @@ packages:
       - typescript
     dev: true
 
-  /@raycast/utils@1.6.1(@raycast/api@1.51.0):
+  /@raycast/utils@1.6.1(@raycast/api@1.51.1):
     resolution: {integrity: sha512-lqowuq7oQDGyCGUzKH1vdRuers5u5lBLTZ0Qp6odyPCz+j1TtnRFf6AmdGjPEMLp+goGhLSgzlVGB1aC+lXkWA==}
     peerDependencies:
       '@raycast/api': '>=1.51.0'
     dependencies:
-      '@raycast/api': 1.51.0(@types/node@18.8.3)(@types/react@18.0.9)
+      '@raycast/api': 1.51.1(@types/node@18.8.3)(@types/react@18.0.9)
       content-type: 1.0.5
       cross-fetch: 3.1.5
       dequal: 2.0.3
